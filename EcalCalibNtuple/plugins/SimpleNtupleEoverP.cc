@@ -954,7 +954,7 @@ bool  SimpleNtupleEoverP::TightEle (const edm::Event & iEvent, const edm::EventS
  
  edm::InputTag EleBad = edm::InputTag("gsfElectrons");
  
- if(EleTag_== EleBad && !electron.ecalDriven()) return false; 
+ // if(EleTag_== EleBad && !electron.ecalDriven()) return false; 
 
  float pt = electron.pt();
  float eta = electron.eta();
@@ -1039,7 +1039,7 @@ bool  SimpleNtupleEoverP::MediumEle (const edm::Event & iEvent, const edm::Event
 
  edm::InputTag EleBad = edm::InputTag("gsfElectrons");
  
- if(EleTag_== EleBad && !electron.ecalDriven()) return false; 
+ // if(EleTag_== EleBad && !electron.ecalDriven()) return false; 
 
  float pt = electron.pt();
  float eta = electron.eta();
@@ -1127,7 +1127,7 @@ bool SimpleNtupleEoverP::LooseEle (const edm::Event & iEvent, const edm::EventSe
 
  edm::InputTag EleBad = edm::InputTag("gsfElectrons");
  
- if(EleTag_== EleBad && !electron.ecalDriven()) return false; 
+ // if(EleTag_== EleBad && !electron.ecalDriven()) return false; 
 
  float pt = electron.pt();
  float eta = electron.eta();
@@ -1408,12 +1408,12 @@ void SimpleNtupleEoverP::fillEleInfo(const edm::Event & iEvent, const edm::Event
   
   //************* REGRESSION
   if( !ecorr_.IsInitialized() ){
-    //ecorr_.Initialize(iSetup,"gbrv3ele_52x.root");
-    ecorr_.Initialize(iSetup,"/afs/cern.ch/user/b/bendavid/cmspublic/regweights52xV3/gbrv3ele_52x.root");
+    ecorr_.Initialize(iSetup,"gbrv3ele_52x.root");
+    //    ecorr_.Initialize(iSetup,"/afs/cern.ch/user/b/bendavid/cmspublic/regweights52xV3/gbrv3ele_52x.root");
   }
   if( !ecorrPho_.IsInitialized()){
-    //ecorrPho_.Initialize(iSetup,"gbrv3ph_52x.root");
-    ecorrPho_.Initialize(iSetup,"/afs/cern.ch/user/b/bendavid/cmspublic/regweights52xV3/gbrv3ph_52x.root");
+    ecorrPho_.Initialize(iSetup,"gbrv3ph_52x.root");
+    //ecorrPho_.Initialize(iSetup,"/afs/cern.ch/user/b/bendavid/cmspublic/regweights52xV3/gbrv3ph_52x.root");
   } 
   
   //************* CLUSTER PU CLEANING TOOLS
@@ -1429,7 +1429,7 @@ void SimpleNtupleEoverP::fillEleInfo(const edm::Event & iEvent, const edm::Event
   {
     edm::InputTag EleBad = edm::InputTag("gsfElectrons");
     
-    if(EleTag_== EleBad && !electron.ecalDriven()) return ; 
+    //    if(EleTag_== EleBad && !electron.ecalDriven()) return ; 
     
     ele1=electron.p4();
     ele1_charge=electron.charge();
@@ -2038,7 +2038,7 @@ void SimpleNtupleEoverP::fillEleInfo(const edm::Event & iEvent, const edm::Event
   {
     edm::InputTag EleBad = edm::InputTag("gsfElectrons");
     
-    if(EleTag_== EleBad && !electron.ecalDriven()) return ; 
+    //    if(EleTag_== EleBad && !electron.ecalDriven()) return ; 
     
     ele2=electron.p4();
     ele2_charge=electron.charge();
