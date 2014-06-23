@@ -6,11 +6,11 @@ from Calibration.EcalCalibNtuple.recoTags_cff import *
 process = cms.Process("SimpleNtupleEoverP")
 
 # flags
-GlobalTag = "START53_V11::All"
+GlobalTag = "POSTLS162_V2::All"
 runOverSandbox   = False
 runOverAlcaReco  = False
 runOverData      = False
-saveRecHitMatrix = True
+saveRecHitMatrix = False
 
 # initialize MessageLogger and output report
 process.load("FWCore.MessageLogger.MessageLogger_cfi")
@@ -45,7 +45,7 @@ if saveRecHitMatrix:
 
 # source
 process.source.fileNames = cms.untracked.vstring(
-    '/store/group/alca_ecalcalib/ecalMIBI/reDIGI/DYToEE_M_20_TuneZ2star_8TeV_pythia6_Summer12-NominalGeo_START53_V15-v2_Standard_2/DYToEE_reDIGI_150_1_97A.root'
+    'file:/afs/cern.ch/user/l/lbrianza/work/PHD/004BC9B6-E5A5-E311-B75F-00215AD4D670.root'
     )
 
 process.maxEvents = cms.untracked.PSet(
