@@ -239,7 +239,7 @@ class SimpleNtupleEoverP : public edm::EDAnalyzer {
   float ele1_scPhiWidth;
   float ele1_scCrackCorr;
   float ele1_scLocalContCorr;
-  float ele1_scE;
+  float ele1_scE_regr;
   float ele1_scEta;
   float ele1_scPhi;
   float ele1_scLaserCorr;
@@ -404,7 +404,7 @@ class SimpleNtupleEoverP : public edm::EDAnalyzer {
   float ele2_scPhiWidth;
   float ele2_scCrackCorr;
   float ele2_scLocalContCorr;
-  float ele2_scE;
+  float ele2_scE_regr;
   float ele2_scEta;
   float ele2_scPhi;
   float ele2_scLaserCorr;
@@ -553,8 +553,8 @@ class SimpleNtupleEoverP : public edm::EDAnalyzer {
   
   // di-electron variables
   float ele1ele2_m;
-  float ele1ele2_scM;
-  float ele1ele2_scM_regression;
+  float ele1ele2_scM_regr;
+  //  float ele1ele2_scM_regression;
   float ele1ele2_scMZS;
 
   float PUit_TrueNumInteractions;
@@ -589,6 +589,7 @@ class SimpleNtupleEoverP : public edm::EDAnalyzer {
   float mcV_Pz;
   int mcV_Charge;
   int mcV_PdgId;
+  float mcV_mass;
 
   float mcF1_fromV_E;
   float mcF1_fromV_Px;
@@ -603,6 +604,9 @@ class SimpleNtupleEoverP : public edm::EDAnalyzer {
   float mcF2_fromV_Pz;
   int mcF2_fromV_Charge;
   int mcF2_fromV_PdgId;
+  
+  float mcee_mass;
+
 } ;
 
 #endif
