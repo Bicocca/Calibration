@@ -5,8 +5,11 @@ from Calibration.EcalCalibNtuple.recoTags_cff import *
 
 process = cms.Process("SimpleNtupleEoverP")
 
+from RecoJets.JetProducers.kt4PFJets_cfi import *
+process.kt6PFJetsNew = kt4PFJets.clone(rParam = 0.6, doAreaFastjet = cms.bool(True), src = cms.InputTag("particleFlow"), doPUOffsetCorr = cms.bool(False), doRhoFastjet =cms.bool(True))
+
 # flags
-GlobalTag = "POSTLS162_V2::All"
+GlobalTag = "POSTLS170_V6::All"
 runOverSandbox   = False
 runOverAlcaReco  = False
 runOverData      = False
@@ -27,6 +30,7 @@ makeSimpleNtuple(process,GlobalTag=GlobalTag,runOverSandbox=runOverSandbox,runOv
 # path
 if not saveRecHitMatrix:
     process.simpleNtuple_step = cms.Path(
+        process.kt6PFJetsNew *
         process.simpleNtupleEoverP
         )
 
@@ -36,6 +40,7 @@ if saveRecHitMatrix:
         process.ecalPreshowerDigis *
         process.hcalDigis *
         process.calolocalreco *
+        process.kt6PFJetsNew *
         process.simpleNtupleEoverP
         )
 
@@ -45,7 +50,8 @@ if saveRecHitMatrix:
 
 # source
 process.source.fileNames = cms.untracked.vstring(
-    'file:/afs/cern.ch/user/l/lbrianza/work/PHD/004BC9B6-E5A5-E311-B75F-00215AD4D670.root'
+    'file:/afs/cern.ch/user/l/lbrianza/work/public/DYJetsToLL_M-50_13TeV-madgraph-pythia8_Spring14dr-PU_S14_POSTLS170_V6-v1_AODSIM.root'
+#    'file:/afs/cern.ch/user/l/lbrianza/work/public/0015495C-66CC-E311-8A39-00266CF33100.root'
     )
 
 process.maxEvents = cms.untracked.PSet(
