@@ -24,8 +24,8 @@
 SimpleNtupleEoverP::SimpleNtupleEoverP(const edm::ParameterSet& iConfig)
 {
   std::cout<< ">>> SimpleNtupleEoverP::SimpleNtupleEoverP begin <<<" << std::endl;
-  
-  
+
+    
   // Initialize parameters for cluster corrections
   std::cout<< ">>>>>> SimpleNtupleEoverP::SimpleNtupleEoverP::read parameters <<<" << std::endl;
   InitializeParams(params);
