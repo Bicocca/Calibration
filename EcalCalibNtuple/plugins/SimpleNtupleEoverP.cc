@@ -26,7 +26,6 @@ SimpleNtupleEoverP::SimpleNtupleEoverP(const edm::ParameterSet& iConfig)
   std::cout<< ">>> SimpleNtupleEoverP::SimpleNtupleEoverP begin <<<" << std::endl;
   
   
-  
   // Initialize parameters for cluster corrections
   std::cout<< ">>>>>> SimpleNtupleEoverP::SimpleNtupleEoverP::read parameters <<<" << std::endl;
   InitializeParams(params);
@@ -66,6 +65,7 @@ SimpleNtupleEoverP::SimpleNtupleEoverP(const edm::ParameterSet& iConfig)
   eventNaiveId_     = 0;
   mcAnalysisZW_     = NULL;
   
+  saveMCInfo_ = true;
   
   //---- Initialize tree branches ----
   
@@ -113,12 +113,12 @@ SimpleNtupleEoverP::SimpleNtupleEoverP(const edm::ParameterSet& iConfig)
   
   outTree_ -> Branch("ele1_scERaw",     &ele1_scERaw,         "ele1_scERaw/F");
   outTree_ -> Branch("ele1_scEtRaw",    &ele1_scEtRaw,       "ele1_scEtRaw/F");
-  outTree_ -> Branch("ele1_scE",    &ele1_scE,         "ele1_scE/F");
+  outTree_ -> Branch("ele1_scE_regr",    &ele1_scE_regr,         "ele1_scE_regr/F");
   outTree_ -> Branch("ele1_scEt",       &ele1_scEt,             "ele1_scEt/F");
-  outTree_ -> Branch("ele1_scE_regression",    &ele1_scE_regression,   "ele1_scE_regression/F");
-  outTree_ -> Branch("ele1_scEerr_regression",       &ele1_scEerr_regression,         "ele1_scEerr_regression/F");
-  outTree_ -> Branch("ele1_scE_regression_PhotonTuned",    &ele1_scE_regression_PhotonTuned ,   "ele1_scE_regression_PhotonTuned/F");
-  outTree_ -> Branch("ele1_scEerr_regression_PhotonTuned",       &ele1_scEerr_regression_PhotonTuned ,         "ele1_scEerr_regression_PhotonTuned/F");
+  //  outTree_ -> Branch("ele1_scE_regression",    &ele1_scE_regression,   "ele1_scE_regression/F");
+  //  outTree_ -> Branch("ele1_scEerr_regression",       &ele1_scEerr_regression,         "ele1_scEerr_regression/F");
+  //  outTree_ -> Branch("ele1_scE_regression_PhotonTuned",    &ele1_scE_regression_PhotonTuned ,   "ele1_scE_regression_PhotonTuned/F");
+  //  outTree_ -> Branch("ele1_scEerr_regression_PhotonTuned",       &ele1_scEerr_regression_PhotonTuned ,         "ele1_scEerr_regression_PhotonTuned/F");
   outTree_ -> Branch("ele1_scERaw_PUcleaned",    &ele1_scERaw_PUcleaned,   "ele1_scERaw_PUcleaned/F");
   outTree_ -> Branch("ele1_es",       &ele1_es,  "ele1_es/F");
   outTree_ -> Branch("ele1_scLaserCorr",       &ele1_scLaserCorr,         "ele1_scLaserCorr/F");
@@ -219,12 +219,12 @@ SimpleNtupleEoverP::SimpleNtupleEoverP(const edm::ParameterSet& iConfig)
   
   outTree_ -> Branch("ele2_scERaw",     &ele2_scERaw,         "ele2_scERaw/F");
   outTree_ -> Branch("ele2_scEtRaw",    &ele2_scEtRaw,       "ele2_scEtRaw/F");
-  outTree_ -> Branch("ele2_scE",    &ele2_scE,         "ele2_scE/F");
+  outTree_ -> Branch("ele2_scE_regr",    &ele2_scE_regr,         "ele2_scE_regr/F");
   outTree_ -> Branch("ele2_scEt",       &ele2_scEt,             "ele2_scEt/F");
-  outTree_ -> Branch("ele2_scE_regression",    &ele2_scE_regression,   "ele2_scE_regression/F");
-  outTree_ -> Branch("ele2_scEerr_regression",       &ele2_scEerr_regression,         "ele2_scEerr_regression/F");
-  outTree_ -> Branch("ele2_scE_regression_PhotonTuned",    &ele2_scE_regression_PhotonTuned ,   "ele2_scE_regression_PhotonTuned/F");
-  outTree_ -> Branch("ele2_scEerr_regression_PhotonTuned",&ele2_scEerr_regression_PhotonTuned ,"ele2_scEerr_regression_PhotonTuned/F");
+  //  outTree_ -> Branch("ele2_scE_regression",    &ele2_scE_regression,   "ele2_scE_regression/F");
+  //  outTree_ -> Branch("ele2_scEerr_regression",       &ele2_scEerr_regression,         "ele2_scEerr_regression/F");
+  //  outTree_ -> Branch("ele2_scE_regression_PhotonTuned",    &ele2_scE_regression_PhotonTuned ,   "ele2_scE_regression_PhotonTuned/F");
+  //  outTree_ -> Branch("ele2_scEerr_regression_PhotonTuned",&ele2_scEerr_regression_PhotonTuned ,"ele2_scEerr_regression_PhotonTuned/F");
   outTree_ -> Branch("ele2_scERaw_PUcleaned",    &ele2_scERaw_PUcleaned,   "ele2_scERaw_PUcleaned/F");
   outTree_ -> Branch("ele2_es",       &ele2_es,  "ele2_es/F");
   outTree_ -> Branch("ele2_scLaserCorr",       &ele2_scLaserCorr,         "ele2_scLaserCorr/F");
@@ -302,8 +302,8 @@ SimpleNtupleEoverP::SimpleNtupleEoverP(const edm::ParameterSet& iConfig)
   // di-electron variables
   std::cout<< ">>>>>> SimpleNtupleEoverP::SimpleNtupleEoverP::set dielectron branches <<<" << std::endl;
   outTree_ -> Branch("ele1ele2_m",             &ele1ele2_m,                          "ele1ele2_m/F");
-  outTree_ -> Branch("ele1ele2_scM",           &ele1ele2_scM,                      "ele1ele2_scM/F");
-  outTree_ -> Branch("ele1ele2_scM_regression",&ele1ele2_scM_regression,"ele1ele2_scM_regression/F");
+  outTree_ -> Branch("ele1ele2_scM_regr",           &ele1ele2_scM_regr,                      "ele1ele2_scM_regr/F");
+  //  outTree_ -> Branch("ele1ele2_scM_regression",&ele1ele2_scM_regression,"ele1ele2_scM_regression/F");
   
   
   // fbrem variables  
@@ -384,6 +384,7 @@ SimpleNtupleEoverP::SimpleNtupleEoverP(const edm::ParameterSet& iConfig)
     outTree_ -> Branch("mcV_Pz",    &mcV_Pz,         "mcV_Pz/F");
     outTree_ -> Branch("mcV_Charge",&mcV_Charge, "mcV_Charge/I");
     outTree_ -> Branch("mcV_PdgId", &mcV_PdgId,   "mcV_PdgId/I");
+    outTree_ -> Branch("mcV_mass",     &mcV_mass,           "mcV_mass/F");
 
     outTree_ -> Branch("mcF1_fromV_E",     &mcF1_fromV_E,          "mcF1_fromV_E/F");
     outTree_ -> Branch("mcF1_fromV_Px",    &mcF1_fromV_Px,        "mcF1_fromV_Px/F");
@@ -398,6 +399,8 @@ SimpleNtupleEoverP::SimpleNtupleEoverP(const edm::ParameterSet& iConfig)
     outTree_ -> Branch("mcF2_fromV_Pz",    &mcF2_fromV_Pz,        "mcF2_fromV_Pz/F");
     outTree_ -> Branch("mcF2_fromV_Charge",&mcF2_fromV_Charge,"mcF2_fromV_Charge/I");
     outTree_ -> Branch("mcF2_fromV_PdgId", &mcF2_fromV_PdgId,  "mcF2_fromV_PdgId/I");
+
+    outTree_ -> Branch("mcee_mass", &mcee_mass,  "mcee_mass/F");
   }
   
   
@@ -482,6 +485,7 @@ void SimpleNtupleEoverP::analyze(const edm::Event& iEvent, const edm::EventSetup
     mcV_Pz = -9999.;
     mcV_Charge = -99;
     mcV_PdgId = -99;
+    mcV_mass = -99;
 
     mcF1_fromV_E = -9999.;
     mcF1_fromV_Px = -9999.;
@@ -495,6 +499,8 @@ void SimpleNtupleEoverP::analyze(const edm::Event& iEvent, const edm::EventSetup
     mcF2_fromV_Pz = -9999.;
     mcF2_fromV_Charge = -99;
     mcF2_fromV_PdgId = -99;
+
+    mcee_mass = -99;
   }
 
   // electron variables  
@@ -527,14 +533,14 @@ void SimpleNtupleEoverP::analyze(const edm::Event& iEvent, const edm::EventSetup
   ele1_scPhiWidth = -99.;
   ele1_scCrackCorr =-99.;
   ele1_scLocalContCorr =-99.;
-  ele1_scE =-99.;
+  ele1_scE_regr =-99.;
   ele1_scEta =-99.;
   ele1_scPhi =-99.;
   ele1_scLaserCorr =-99.;
-  ele1_scE_regression =-99.;
-  ele1_scEerr_regression=-99.;
-  ele1_scE_regression_PhotonTuned=-99.;
-  ele1_scEerr_regression_PhotonTuned=-99.;
+  //  ele1_scE_regression =-99.;
+  //  ele1_scEerr_regression=-99.;
+  //  ele1_scE_regression_PhotonTuned=-99.;
+  //  ele1_scEerr_regression_PhotonTuned=-99.;
   ele1_scERaw_PUcleaned=-99.;
   ele1_scEtaWidth_PUcleaned=-99.;
   ele1_scPhiWidth_PUcleaned=-99.;
@@ -667,14 +673,14 @@ void SimpleNtupleEoverP::analyze(const edm::Event& iEvent, const edm::EventSetup
   ele2_scPhiWidth = -99.;
   ele2_scCrackCorr =-99.;
   ele2_scLocalContCorr =-99.;
-  ele2_scE =-99.;
+  ele2_scE_regr =-99.;
   ele2_scEta =-99.;
   ele2_scPhi =-99.;
   ele2_scLaserCorr =-99.;
-  ele2_scE_regression =-99.;
-  ele2_scEerr_regression=-99.;
-  ele2_scE_regression_PhotonTuned=-99.;
-  ele2_scEerr_regression_PhotonTuned=-99.;
+  //  ele2_scE_regression =-99.;
+  //  ele2_scEerr_regression=-99.;
+  //  ele2_scE_regression_PhotonTuned=-99.;
+  //  ele2_scEerr_regression_PhotonTuned=-99.;
   ele2_scERaw_PUcleaned=-99.;
   ele2_scEtaWidth_PUcleaned=-99.;
   ele2_scPhiWidth_PUcleaned=-99.;
@@ -818,8 +824,8 @@ void SimpleNtupleEoverP::analyze(const edm::Event& iEvent, const edm::EventSetup
   
   // di-electron variables
   ele1ele2_m=-99.;
-  ele1ele2_scM=-99.;
-  ele1ele2_scM_regression=-99.;
+  ele1ele2_scM_regr=-99.;
+  //  ele1ele2_scM_regression=-99.;
 
   // Accept event from json file
   if( jsonFlag_ == true )
@@ -838,13 +844,51 @@ void SimpleNtupleEoverP::analyze(const edm::Event& iEvent, const edm::EventSetup
   //************* MC PU
    if (saveMCPU_) fillMCPUInfo (iEvent, iSetup);
 
+   //     edm::Handle<reco::GenParticleCollection> genParticles;
+   //  iEvent.getByLabel(MCtruthTag_, genParticles);
+
+     //     std::vector<GenParticle> e;
+
+     //       for(reco::GenParticleCollection::const_iterator p = genParticles -> begin();  p != genParticles -> end(); ++p)
+     // {
+
+       /*       if (fabs(p->pdgId())==11)  {
+	 const reco::Candidate* e = &(*p);
+	 if (e->pt()>10)
+	   isGoodEvent=true;
+       }
+       */       // find fermions from vector boson decay                                                                                                                      
+     /*          if (((fabs(p->pdgId())==23) )){//&& (p->status()==22)) ){//|| ((fabs(pdgId)==23) && (status==62)) ) {       
+
+         const reco::Candidate* Z = &(*p);
+         std::vector<const reco::Candidate*> figli;
+         FindDaughterParticles(&Z, false, 1, &figli);
+
+	 //	 std::cout<<figli.size()<<std::endl;
+	 if (figli.size()<2)  continue;
+	 if ( fabs(figli.at(0)->pdgId())!=11 || fabs(figli.at(1)->pdgId())!=11) continue; 
+	 std::cout<<figli.at(0)->energy()<<" "<<figli.at(1)->energy()<<std::endl;
+	 // if ( figli.at(0)->pt()<10 || figli.at(1)->pt()<10) continue; 	
+	 //         std::cout<< figli.at(0)->pdgId()<<" "<<figli.at(1)->pdgId()<<std::endl;
+	 //  getchar();
+	 TLorentzVector *ee = new TLorentzVector (figli.at(0)->px()+figli.at(1)->px(), figli.at(0)->py()+figli.at(1)->py(), figli.at(0)->pz()+figli.at(1)->pz(), figli.at(0)->energy()+figli.at(1)->energy() );
+	 //	 std::cout<<ee->M()<<std::endl;
+	 if ((ee->M()>60) && (ee->M()<120))    isGoodEvent=true;
+	 
+       }
+         }
+     */
+
    //************ MC INFO
    if(saveMCInfo_) {
      edm::Handle<reco::GenParticleCollection> genParticles;
      iEvent.getByLabel(MCtruthTag_, genParticles);
+     
      eventType_ = 0;
-     mcAnalysisZW_ = new MCDumperZW(genParticles, eventType_, verbosity_);
+     mcAnalysisZW_ = new MCDumperZW(genParticles, eventType_,verbosity_);
      fillMCInfo(iEvent, iSetup);
+     //     if (mcee_mass>0)  isGoodEvent=true;
+     //     if ((mcee_mass>60) && (mcee_mass<120))    isGoodEvent=true;
    }
  
   //************* ELECTRONS
@@ -910,10 +954,10 @@ void SimpleNtupleEoverP::analyze(const edm::Event& iEvent, const edm::EventSetup
     if ( isGoodEvent )   outTree_ -> Fill();
     
   }
-  else{
+    else{
          int nEle = electrons.size();
          if ( nEle == 1 ) { isW = 1; isZ = 0; }
-         if ( nEle == 2 ) { isW = 0; isZ = 1; }
+         if ( nEle >= 2 ) { isW = 0; isZ = 1; }
   
          if ( isW == 1 ) fillEleInfo ( iEvent, iSetup, 0, "ele1" ); 
                       
@@ -926,10 +970,13 @@ void SimpleNtupleEoverP::analyze(const edm::Event& iEvent, const edm::EventSetup
 
          fillMetInfo (iEvent, iSetup);
  
-         if (isW==1 || isZ==1) outTree_ -> Fill();
+	 if (isW==1 || isZ==1) outTree_ -> Fill();
+	 //	 if (nEle>0)   isGoodEvent=true;
+	 //	 	 if ((nEle>1) && (electrons.at(0).pt()>10) && (electrons.at(1).pt()>10))   isGoodEvent=myZselection(iEvent, iSetup);
+	 //	 if (isGoodEvent)  outTree_ -> Fill();
          }
   
-  
+
   if( verbosity_ )
     std::cout<< ">>> SimpleNtupleEoverP::analyze end <<<" << std::endl;
 }
@@ -1406,16 +1453,16 @@ void SimpleNtupleEoverP::fillEleInfo(const edm::Event & iEvent, const edm::Event
   //************* CLUSTER LAZY TOOLS
   EcalClusterLazyTools lazyTools(iEvent,iSetup,recHitCollection_EB_,recHitCollection_EE_); 
   
-  //************* REGRESSION
-  if( !ecorr_.IsInitialized() ){
-    ecorr_.Initialize(iSetup,"gbrv3ele_52x.root");
+  //************* REGRESSION        // LUCA: in >70X does not need it anymore!!!
+  /*    if( !ecorr_.IsInitialized() ){
+     ecorr_.Initialize(iSetup,"gbrv3ele_52x.root");
     //    ecorr_.Initialize(iSetup,"/afs/cern.ch/user/b/bendavid/cmspublic/regweights52xV3/gbrv3ele_52x.root");
-  }
-  if( !ecorrPho_.IsInitialized()){
-    ecorrPho_.Initialize(iSetup,"gbrv3ph_52x.root");
+    }
+    if( !ecorrPho_.IsInitialized()){
+     ecorrPho_.Initialize(iSetup,"gbrv3ph_52x.root");
     //ecorrPho_.Initialize(iSetup,"/afs/cern.ch/user/b/bendavid/cmspublic/regweights52xV3/gbrv3ph_52x.root");
-  } 
-  
+    } 
+  */
   //************* CLUSTER PU CLEANING TOOLS
   EcalClusterPUCleaningTools cleaningTools(iEvent, iSetup, recHitCollection_EB_, recHitCollection_EE_); 
   
@@ -1424,7 +1471,9 @@ void SimpleNtupleEoverP::fillEleInfo(const edm::Event & iEvent, const edm::Event
   // Take the correct ele
   bool printOut = false;
   reco::GsfElectron electron = electrons.at(iEle);
-  
+
+  //    std::cout<<electron.superCluster()->rawEnergy()<<" "<<electron.superCluster()->energy()<<" "<<electron.superCluster()->correctedEnergy()<<" "<<ele1_scE_regression<<std::endl;  
+
   if ( eleName == "ele1")
   {
     edm::InputTag EleBad = edm::InputTag("gsfElectrons");
@@ -1469,22 +1518,28 @@ void SimpleNtupleEoverP::fillEleInfo(const edm::Event & iEvent, const edm::Event
     
     Handle< double > rhoHandle;
     iEvent.getByLabel(rhoTag_,rhoHandle);
-    std::pair<double,double> cor = ecorr_.CorrectedEnergyWithErrorV3(electron,*hVertexProduct,*rhoHandle,lazyTools,iSetup);
+
+
+
+    //    std::pair<double,double> cor = ecorr_.CorrectedEnergyWithErrorV3(electron,*hVertexProduct,*rhoHandle,lazyTools,iSetup);  
+                  //LUCA: in 70x regression already implemented, scRef->Energy is already the regression energy
     
     ele1_scERaw=scRef->rawEnergy();
     ele1_scEtRaw=scRef->rawEnergy()*(Rt/R);
     ele1_scEt=scRef->energy()*(Rt/R);
     ele1_scEtaWidth=scRef->etaWidth();
     ele1_scPhiWidth=scRef->phiWidth();
-    ele1_scE=scRef->energy();
+    ele1_scE_regr=scRef->energy();
     ele1_scEta=scRef->eta();
     ele1_scPhi=scRef->phi();
-    ele1_scE_regression=cor.first;
-    ele1_scEerr_regression = cor.second;
+
+
+    //    ele1_scE_regression=cor.first;
+    //    ele1_scEerr_regression = cor.second;
     
-    std::pair<double,double> corPho = ecorrPho_.CorrectedEnergyWithErrorV3(electron,*hVertexProduct,*rhoHandle,lazyTools,iSetup);
-    ele1_scE_regression_PhotonTuned=corPho.first;
-    ele1_scEerr_regression_PhotonTuned = corPho.second;
+    //    std::pair<double,double> corPho = ecorrPho_.CorrectedEnergyWithErrorV3(electron,*hVertexProduct,*rhoHandle,lazyTools,iSetup);
+    //    ele1_scE_regression_PhotonTuned=corPho.first;
+    //    ele1_scEerr_regression_PhotonTuned = corPho.second;
     
     
     
@@ -1885,8 +1940,8 @@ void SimpleNtupleEoverP::fillEleInfo(const edm::Event & iEvent, const edm::Event
     ele1_nRecHits = numRecHit; 
     
     ele1_scLaserCorr = sumLaserCorrectionRecHitE/sumRecHitE;
-    if ( applyCorrections_ ) ele1_scE = scRef->energy()*ele1_fEta*sumRecHitE;
-    else ele1_scE = scRef->energy();
+    if ( applyCorrections_ ) ele1_scE_regr = scRef->energy()*ele1_fEta*sumRecHitE;
+    else ele1_scE_regr = scRef->energy();
     
     ele1_fEtaCorr = fClusterCorrections(sumRecHitE+ele1_es,ele1_scEta,scRef->phiWidth()/scRef->etaWidth(),params)/fClusterCorrections(scRef->rawEnergy()+ele1_es,ele1_scEta,scRef->phiWidth()/scRef->etaWidth(),params);
     
@@ -2080,7 +2135,7 @@ void SimpleNtupleEoverP::fillEleInfo(const edm::Event & iEvent, const edm::Event
     
     Handle< double > rhoHandle;
     iEvent.getByLabel(rhoTag_,rhoHandle);
-    std::pair<double,double> cor = ecorr_.CorrectedEnergyWithErrorV3(electron,*hVertexProduct,*rhoHandle,lazyTools,iSetup);
+    //    std::pair<double,double> cor = ecorr_.CorrectedEnergyWithErrorV3(electron,*hVertexProduct,*rhoHandle,lazyTools,iSetup);
     
     
     ele2_scERaw=scRef->rawEnergy();
@@ -2088,15 +2143,15 @@ void SimpleNtupleEoverP::fillEleInfo(const edm::Event & iEvent, const edm::Event
     ele2_scEt=scRef->energy()*(Rt/R);
     ele2_scEtaWidth=scRef->etaWidth();
     ele2_scPhiWidth=scRef->phiWidth();
-    ele2_scE=scRef->energy();
+    ele2_scE_regr=scRef->energy();
     ele2_scEta=scRef->eta();
     ele2_scPhi=scRef->phi();
-    ele2_scE_regression=cor.first;
-    ele2_scEerr_regression = cor.second;
+    //    ele2_scE_regression=cor.first;
+    //    ele2_scEerr_regression = cor.second;
     
-    std::pair<double,double> corPho = ecorrPho_.CorrectedEnergyWithErrorV3(electron,*hVertexProduct,*rhoHandle,lazyTools,iSetup);
-    ele2_scE_regression_PhotonTuned=corPho.first;
-    ele2_scEerr_regression_PhotonTuned = corPho.second;
+    //    std::pair<double,double> corPho = ecorrPho_.CorrectedEnergyWithErrorV3(electron,*hVertexProduct,*rhoHandle,lazyTools,iSetup);
+    //    ele2_scE_regression_PhotonTuned=corPho.first;
+    //    ele2_scEerr_regression_PhotonTuned = corPho.second;
     
     
     EcalClusterLocal ecalLocalCoord;
@@ -2489,8 +2544,8 @@ void SimpleNtupleEoverP::fillEleInfo(const edm::Event & iEvent, const edm::Event
     
     ele2_nRecHits = numRecHit;
     ele2_scLaserCorr = sumLaserCorrectionRecHitE/sumRecHitE;
-    if ( applyCorrections_ ) ele2_scE = scRef->energy()*ele2_fEta*sumRecHitE;
-    else ele2_scE = scRef->energy();
+    if ( applyCorrections_ ) ele2_scE_regr = scRef->energy()*ele2_fEta*sumRecHitE;
+    else ele2_scE_regr = scRef->energy();
     
     ele2_fEtaCorr = fClusterCorrections(sumRecHitE+ele2_es,ele2_scEta,scRef->phiWidth()/scRef->etaWidth(),params)/fClusterCorrections(scRef->rawEnergy()+ele2_es,ele2_scEta,scRef->phiWidth()/scRef->etaWidth(),params);
         
@@ -2698,13 +2753,13 @@ void SimpleNtupleEoverP::fillDoubleEleInfo(const edm::Event & iEvent, const edm:
 
   ele1ele2_m = (ele1 + ele2).mass();
   
-  ROOT::Math::PtEtaPhiEVector ele1_sc(ele1_scE*sin(2*atan(exp(-1.*ele1_eta))),ele1_eta,ele1_phi,ele1_scE);
-  ROOT::Math::PtEtaPhiEVector ele2_sc(ele2_scE*sin(2*atan(exp(-1.*ele2_eta))),ele2_eta,ele2_phi,ele2_scE);
-  ele1ele2_scM = (ele1_sc + ele2_sc).mass();
+  ROOT::Math::PtEtaPhiEVector ele1_sc(ele1_scE_regr*sin(2*atan(exp(-1.*ele1_eta))),ele1_eta,ele1_phi,ele1_scE_regr);
+  ROOT::Math::PtEtaPhiEVector ele2_sc(ele2_scE_regr*sin(2*atan(exp(-1.*ele2_eta))),ele2_eta,ele2_phi,ele2_scE_regr);
+  ele1ele2_scM_regr = (ele1_sc + ele2_sc).mass();
 
-  ROOT::Math::PtEtaPhiEVector ele1_sc_regression(ele1_scE_regression*sin(2*atan(exp(-1.*ele1_eta))),ele1_eta,ele1_phi,ele1_scE_regression);
-  ROOT::Math::PtEtaPhiEVector ele2_sc_regression(ele2_scE_regression*sin(2*atan(exp(-1.*ele2_eta))),ele2_eta,ele2_phi,ele2_scE_regression);
-  ele1ele2_scM_regression = (ele1_sc_regression + ele2_sc_regression).mass();
+  //  ROOT::Math::PtEtaPhiEVector ele1_sc_regression(ele1_scE_regression*sin(2*atan(exp(-1.*ele1_eta))),ele1_eta,ele1_phi,ele1_scE_regression);
+  //  ROOT::Math::PtEtaPhiEVector ele2_sc_regression(ele2_scE_regression*sin(2*atan(exp(-1.*ele2_eta))),ele2_eta,ele2_phi,ele2_scE_regression);
+  //  ele1ele2_scM_regression = (ele1_sc_regression + ele2_sc_regression).mass();
 
 }
 
@@ -2812,7 +2867,7 @@ void SimpleNtupleEoverP::fillMCInfo (const edm::Event & iEvent, const edm::Event
 {
   //  std::cout << "SimpleNtupleEoverP::fillMCDecayInfo" << std::endl; 
 
-  if(mcAnalysisZW_->isValid())
+   if(mcAnalysisZW_->isValid())
     {
       // Vboson Z 23  W +/-24
       mcV_E = mcAnalysisZW_->mcV()->p4().E();
@@ -2821,6 +2876,7 @@ void SimpleNtupleEoverP::fillMCInfo (const edm::Event & iEvent, const edm::Event
       mcV_Px = mcAnalysisZW_->mcV()->p4().Pz();
       mcV_Charge = mcAnalysisZW_->mcV()->charge();
       mcV_PdgId = mcAnalysisZW_->mcV()->pdgId();
+      mcV_mass = mcAnalysisZW_->mcV()->p4().M();
 
       // lepton1 pT > lepton2 pT
       //      mcAnalysisZW_->PrintEventInfo();
@@ -2837,7 +2893,11 @@ void SimpleNtupleEoverP::fillMCInfo (const edm::Event & iEvent, const edm::Event
       mcF2_fromV_Pz = mcAnalysisZW_->mcF2_fromV()->p4().Pz();
       mcF2_fromV_Charge = mcAnalysisZW_->mcF2_fromV()->charge();
       mcF2_fromV_PdgId = mcAnalysisZW_->mcF2_fromV()->pdgId();
-      
+
+      if (fabs(mcAnalysisZW_->mcF1_fromV()->pdgId())==11 && fabs(mcAnalysisZW_->mcF2_fromV()->pdgId())==11) {
+	TLorentzVector *ee = new TLorentzVector (mcAnalysisZW_->mcF1_fromV()->p4().Px()+mcAnalysisZW_->mcF2_fromV()->p4().Px(), mcAnalysisZW_->mcF1_fromV()->p4().Py()+mcAnalysisZW_->mcF2_fromV()->p4().Py(), mcAnalysisZW_->mcF1_fromV()->p4().Pz()+mcAnalysisZW_->mcF2_fromV()->p4().Pz(), mcAnalysisZW_->mcF1_fromV()->p4().E()+mcAnalysisZW_->mcF2_fromV()->p4().E()  );
+	mcee_mass = ee->M();
+      }      
     }
 
 }
