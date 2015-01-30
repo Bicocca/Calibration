@@ -9,7 +9,7 @@ from RecoJets.JetProducers.kt4PFJets_cfi import *
 process.kt6PFJetsNew = kt4PFJets.clone(rParam = 0.6, doAreaFastjet = cms.bool(True), src = cms.InputTag("particleFlow"), doPUOffsetCorr = cms.bool(False), doRhoFastjet =cms.bool(True))
 
 # flags
-GlobalTag = "POSTLS170_V6::All"
+GlobalTag = "PHYS14_25_V1::All"
 runOverSandbox   = False
 runOverAlcaReco  = False
 runOverData      = False
@@ -50,12 +50,13 @@ if saveRecHitMatrix:
 
 # source
 process.source.fileNames = cms.untracked.vstring(
-    'file:/afs/cern.ch/user/l/lbrianza/work/public/DYJetsToLL_M-50_13TeV-madgraph-pythia8_Spring14dr-PU_S14_POSTLS170_V6-v1_AODSIM.root'
-#    'file:/afs/cern.ch/user/l/lbrianza/work/public/0015495C-66CC-E311-8A39-00266CF33100.root'
+#'root://xrootd.unl.edu//store/mc/Phys14DR/DYJetsToLL_M-50_13TeV-madgraph-pythia8/AODSIM/PU20bx25_PHYS14_25_V1-v1/00000/00CC714A-F86B-E411-B99A-0025904B5FB8.root'
+'/store/caf/user/amartell/ES_studies/datasets/Phys14DR_DYJetsToLL_M-50_13TeV-madgraph-pythia8_AODSIM_PU20bx25_PHYS14_25_V1-v1.root'
+
     )
 
 process.maxEvents = cms.untracked.PSet(
-   input = cms.untracked.int32(-1)
+   input = cms.untracked.int32(1000)
 )
 
 process.TFileService = cms.Service(
