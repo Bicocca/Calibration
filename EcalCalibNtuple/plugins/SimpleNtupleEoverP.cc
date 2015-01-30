@@ -1024,7 +1024,8 @@ bool  SimpleNtupleEoverP::TightEle (const edm::Event & iEvent, const edm::EventS
  float HOverE        = electron.hadronicOverEm();
  float ooemoop       = (1.0/electron.ecalEnergy() - electron.eSuperClusterOverP()/electron.ecalEnergy());
 
- int mishits             = electron.gsfTrack()->trackerExpectedHitsInner().numberOfHits();
+ // int mishits             = electron.gsfTrack()->trackerExpectedHitsInner().numberOfHits();
+ int mishits             = electron.gsfTrack()->numberOfLostHits();
  int nAmbiguousGsfTracks = electron.ambiguousGsfTracksSize();
 
 
@@ -1110,7 +1111,8 @@ bool  SimpleNtupleEoverP::MediumEle (const edm::Event & iEvent, const edm::Event
  float HOverE        = electron.hadronicOverEm();
  float ooemoop       = (1.0/electron.ecalEnergy() - electron.eSuperClusterOverP()/electron.ecalEnergy());
 
- int mishits             = electron.gsfTrack()->trackerExpectedHitsInner().numberOfHits();
+ // int mishits             = electron.gsfTrack()->trackerExpectedHitsInner().numberOfHits();
+ int mishits             = electron.gsfTrack()->numberOfLostHits();
  int nAmbiguousGsfTracks = electron.ambiguousGsfTracksSize();
 
 
@@ -1198,7 +1200,8 @@ bool SimpleNtupleEoverP::LooseEle (const edm::Event & iEvent, const edm::EventSe
  float HOverE        = electron.hadronicOverEm();
  float ooemoop       = (1.0/electron.ecalEnergy() - electron.eSuperClusterOverP()/electron.ecalEnergy());
 
- int mishits             = electron.gsfTrack()->trackerExpectedHitsInner().numberOfHits();
+ // int mishits             = electron.gsfTrack()->trackerExpectedHitsInner().numberOfHits();
+ int mishits             = electron.gsfTrack()->numberOfLostHits();
  int nAmbiguousGsfTracks = electron.ambiguousGsfTracksSize();
 
 
@@ -2773,7 +2776,7 @@ double SimpleNtupleEoverP::deltaPhi(const double& phi1, const double& phi2){
 // -----------------------------------------------------------------------------------------
 void SimpleNtupleEoverP::fillMCPUInfo (const edm::Event & iEvent, const edm::EventSetup & iSetup) 
 {
- //std::cout << "SimpleNtupleCalib::fillMCPUInfo" << std::endl;
+  //std::cout << "SimpleNtupleCalib::fillMCPUInfo" << std::endl;
 
   edm::Handle<std::vector<PileupSummaryInfo> > PupInfo;
   iEvent.getByLabel(MCPileupTag_, PupInfo);
@@ -2865,7 +2868,8 @@ void SimpleNtupleEoverP::fillMCPUInfo (const edm::Event & iEvent, const edm::Eve
 // -----------------------------------------------------------------------------------------
 void SimpleNtupleEoverP::fillMCInfo (const edm::Event & iEvent, const edm::EventSetup & iESetup)
 {
-  //  std::cout << "SimpleNtupleEoverP::fillMCDecayInfo" << std::endl; 
+  // std::cout << "SimpleNtupleEoverP::fillMCDecayInfo" << std::endl; 
+  // std::cout << " mcAnalysisZW_->isValid() = " << mcAnalysisZW_->isValid() << std::endl;
 
    if(mcAnalysisZW_->isValid())
     {
